@@ -25,7 +25,7 @@ const maxCount = 9
 // }
 // limit
 const LimitImageUploader: FC = () => {
-  const [fileList, setFileList] = useState<ImageUploadItem[]>([
+  const [imageList, setImageList] = useState<ImageUploadItem[]>([
     {
       url: demoSrc,
     },
@@ -40,12 +40,12 @@ const LimitImageUploader: FC = () => {
 
   return (
     <ImageUploader
-      value={fileList}
-      onChange={setFileList}
+      value={imageList}
+      onChange={setImageList}
       upload={mockUpload}
       multiple
       maxCount={maxCount}
-      showUpload={fileList.length < maxCount}
+      showUpload={imageList.length < maxCount}
       beforeUpload={beforeUpload}
       onCountExceed={() => {
         Toast.show(`アップロードは最大 ${maxCount} 枚までにしてください`)
@@ -66,8 +66,9 @@ interface Profile {
 
 export default () => {
   const [profile, setProfile] = useState<Profile>({})
-  const [visible, setVisible] = useState(false)
-  const [value, setValue] = useState<string[]>([])
+  const [visibleCascader, setVisibleCascader] = useState(false)
+  const [productCascader, setProductCascader] = useState<string[]>([])
+  const [form] = Form.useForm()
 
   const onFinish = (values: any) => {
     Dialog.alert({
@@ -94,78 +95,83 @@ export default () => {
           />
         </AutoCenter>
 
-        <Form
-          name="form"
-          initialValues={{
-            displayName: profile.displayName,
-          }}
-          onFinish={onFinish}
-          footer={
-            <Button block type="submit" color="primary" size="large">
-              OK
-            </Button>
-          }
-        >
-          <Form.Item name="displayName" label="お名前">
-            <Input placeholder="お名前をご入力ください" />
-          </Form.Item>
-          <Form.Item name="product" label="製品">
-            <Button
-              onClick={() => {
-                setVisible(true)
-              }}
-            >
-              ご使用の機器...
-            </Button>
-            <Cascader
-              options={products}
-              visible={visible}
-              cancelText="キャンセル"
-              confirmText="OK"
-              placeholder="選択"
-              onClose={() => {
-                setVisible(false)
-              }}
-              value={value}
-              onConfirm={setValue}
-            >
-              {(items) => {
-                if (items.every((item) => item === null)) {
-                  return '未選択'
-                } else {
-                  return items.map((item) => item?.label ?? '未選択').join('-')
-                }
-              }}
-            </Cascader>
-          </Form.Item>
-          <Form.Item
-            name="content"
-            label="ご症状内容"
-            help="ご症状内容をご入力ください"
-            rules={[{ required: true }]}
+        {profile.displayName && (
+          <Form
+            name="form"
+            form={form}
+            initialValues={{
+              displayName: profile.displayName,
+            }}
+            onFinish={onFinish}
+            footer={
+              <Button block type="submit" color="primary" size="large">
+                OK
+              </Button>
+            }
           >
-            <TextArea
-              defaultValue={''}
-              placeholder="ご症状内容をご入力ください"
-              showCount
-              autoSize={{ minRows: 3, maxRows: 7 }}
-              maxLength={300}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="images"
-            label="写真"
-            help="写真のご送付をお願いします"
-          >
-            <Space direction="vertical">
-              <LimitImageUploader />
-              <DemoDescription
-                content={`写真は最大${maxCount}枚をアップロードできます`}
+            <Form.Item name="displayName" label="お名前">
+              <Input placeholder="お名前をご入力ください" />
+            </Form.Item>
+            <Form.Item name="product" label="製品">
+              <Button
+                onClick={() => {
+                  setVisibleCascader(true)
+                }}
+              >
+                ご使用の機器...
+              </Button>
+              <Cascader
+                options={products}
+                visible={visibleCascader}
+                cancelText="キャンセル"
+                confirmText="OK"
+                placeholder="選択"
+                onClose={() => {
+                  setVisibleCascader(false)
+                }}
+                value={productCascader}
+                onConfirm={setProductCascader}
+              >
+                {(items) => {
+                  if (items.every((item) => item === null)) {
+                    return '未選択'
+                  } else {
+                    return items
+                      .map((item) => item?.label ?? '未選択')
+                      .join('-')
+                  }
+                }}
+              </Cascader>
+            </Form.Item>
+            <Form.Item
+              name="content"
+              label="ご症状内容"
+              help="ご症状内容をご入力ください"
+              rules={[{ required: true }]}
+            >
+              <TextArea
+                defaultValue={''}
+                placeholder="ご症状内容をご入力ください"
+                showCount
+                autoSize={{ minRows: 3, maxRows: 7 }}
+                maxLength={300}
               />
-            </Space>
-          </Form.Item>
-        </Form>
+            </Form.Item>
+
+            <Form.Item
+              name="images"
+              label="写真"
+              help="写真のご送付をお願いします"
+            >
+              <Space direction="vertical">
+                <LimitImageUploader />
+                <DemoDescription
+                  content={`写真は最大${maxCount}枚をアップロードできます`}
+                />
+              </Space>
+            </Form.Item>
+          </Form>
+        )}
       </DemoBlock>
     </>
   )
