@@ -1,55 +1,30 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { ImageUploader, Space, Toast, Dialog } from 'antd-mobile'
+import { Button, TextArea, Form, Input } from 'antd-mobile'
+import liff from '@line/liff'
+
 import { DemoBlock, DemoDescription } from '../demos'
 import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
 
-import { demoSrc, mockUpload, mockUploadFail } from './utils'
+import { demoSrc, mockUpload } from './utils'
 
-// 基础用法
-const Basic: FC = () => {
+const maxCount = 9
+
+// {
+//     "userId": "U67441163b614ab53b3f884d7cd4b698e",
+//     "displayName": "のなめ",
+//     "pictureUrl": "https://profile.line-scdn.net/0hOYzHUg7eEHZXMTvWpKBuCSdhExx0QElkcgNcFmc5HhNvAVciKQcPEjc4TRJoA1RzLl4MQzYwHRZbImcQSWfsQlABTkFuB1IkclZZkQ"
+// }
+// limit
+const LimitImageUploader: FC = () => {
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
       url: demoSrc,
     },
   ])
-
-  return (
-    <ImageUploader
-      value={fileList}
-      onChange={setFileList}
-      upload={mockUpload}
-    />
-  )
-}
-
-// 上传状态
-const UploadStatus: FC = () => {
-  const [fileList, setFileList] = useState<ImageUploadItem[]>([
-    {
-      url: demoSrc,
-    },
-  ])
-
-  return (
-    <ImageUploader
-      value={fileList}
-      onChange={setFileList}
-      upload={mockUploadFail as any}
-    />
-  )
-}
-
-// 限制上传大小
-const LimitSize: FC = () => {
-  const [fileList, setFileList] = useState<ImageUploadItem[]>([
-    {
-      url: demoSrc,
-    },
-  ])
-
   function beforeUpload(file: File) {
-    if (file.size > 1024 * 1024) {
-      Toast.show('请选择小于 1M 的图片')
+    if (file.size > 5 * 1024 * 1024) {
+      Toast.show('Images size should less than 5M')
       return null
     }
     return file
@@ -60,51 +35,16 @@ const LimitSize: FC = () => {
       value={fileList}
       onChange={setFileList}
       upload={mockUpload}
-      beforeUpload={beforeUpload}
-    />
-  )
-}
-
-// 限制图片数量
-const LimitCount: FC = () => {
-  const maxCount = 3
-  const [fileList, setFileList] = useState<ImageUploadItem[]>([
-    {
-      url: demoSrc,
-    },
-  ])
-
-  return (
-    <ImageUploader
-      value={fileList}
-      onChange={setFileList}
-      upload={mockUpload}
       multiple
-      maxCount={3}
+      maxCount={maxCount}
       showUpload={fileList.length < maxCount}
-      onCountExceed={(exceed) => {
-        Toast.show(`最多选择 ${maxCount} 张图片，你多选了 ${exceed} 张`)
+      beforeUpload={beforeUpload}
+      onCountExceed={() => {
+        Toast.show(`アップロードは最大 ${maxCount} 枚までにしてください`)
       }}
-    />
-  )
-}
-
-// 删除图片确认
-const DeleteImage: FC = () => {
-  const [fileList, setFileList] = useState<ImageUploadItem[]>([
-    {
-      url: demoSrc,
-    },
-  ])
-
-  return (
-    <ImageUploader
-      value={fileList}
-      onChange={setFileList}
-      upload={mockUpload}
       onDelete={() => {
         return Dialog.confirm({
-          content: '是否确认删除',
+          content: 'Confirm to delete?',
         })
       }}
     />
@@ -112,38 +52,60 @@ const DeleteImage: FC = () => {
 }
 
 export default () => {
+  const onFinish = (values: any) => {
+    Dialog.alert({
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  useEffect(() => {
+    liff.getProfile().then(console.log)
+  }, [])
   return (
     <>
-      <DemoBlock title="基础用法">
-        <Basic />
-      </DemoBlock>
+      <DemoBlock title="ご障害についてご入力をお願いします">
+        <Form
+          name="form"
+          onFinish={onFinish}
+          footer={
+            <Button block type="submit" color="primary" size="large">
+              OK
+            </Button>
+          }
+        >
+          <Form.Item name="name" label="お名前" rules={[{ required: true }]}>
+            <Input placeholder="お名前をご入力ください" />
+          </Form.Item>
+          <Form.Item name="address" label="ご住所">
+            <Input placeholder="ご住所をご入力ください" />
+          </Form.Item>
+          <Form.Item
+            name="content"
+            label="ご症状内容"
+            help="ご症状内容をご入力ください"
+          >
+            <TextArea
+              defaultValue={''}
+              placeholder="ご症状内容をご入力ください"
+              showCount
+              autoSize={{ minRows: 3, maxRows: 7 }}
+              maxLength={300}
+            />
+          </Form.Item>
 
-      <DemoBlock title="上传状态">
-        <Space direction="vertical">
-          <UploadStatus />
-          <DemoDescription content="尝试上传几张图片，可以看到上传中和失败的效果" />
-        </Space>
-      </DemoBlock>
-
-      <DemoBlock title="限制上传大小">
-        <Space direction="vertical">
-          <LimitSize />
-          <DemoDescription content="当用户选择的文件超过 1M 时，跳过上传并提示用户" />
-        </Space>
-      </DemoBlock>
-
-      <DemoBlock title="限制图片数量">
-        <Space direction="vertical">
-          <LimitCount />
-          <DemoDescription content="限制用户最多上传 3 张图片，当达到最大数量时隐藏掉上传按钮" />
-        </Space>
-      </DemoBlock>
-
-      <DemoBlock title="删除图片确认">
-        <Space direction="vertical">
-          <DeleteImage />
-          <DemoDescription content="当用户删除图片时，进行确认，确认后可删除图片" />
-        </Space>
+          <Form.Item
+            name="images"
+            label="写真"
+            help="写真のご送付をお願いします"
+          >
+            <Space direction="vertical">
+              <LimitImageUploader />
+              <DemoDescription
+                content={`写真は最大${maxCount}枚をアップロードできます`}
+              />
+            </Space>
+          </Form.Item>
+        </Form>
       </DemoBlock>
     </>
   )

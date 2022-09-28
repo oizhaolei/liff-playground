@@ -10,7 +10,7 @@ function App() {
   return (
     <div className={styles.App}>
       <h1>Vite + React</h1>
-      <DemoBlock title="填充模式">
+      <DemoBlock title="Fullfill Mode">
         <Space wrap>
           <Button color="primary" fill="solid">
             Solid
