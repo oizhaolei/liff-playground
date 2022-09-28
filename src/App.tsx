@@ -6,7 +6,7 @@ import ImageUploader from './ImageUploader'
 import TextArea from './TextArea'
 import Form from './Form'
 import Input from './Input'
-import Liff from './Liff'
+import Liff from './LIFF'
 
 export default function App() {
   return (
