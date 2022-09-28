@@ -106,16 +106,16 @@ export default () => {
             </Button>
           }
         >
-          <Form.Item name="name" label="お名前" rules={[{ required: true }]}>
+          <Form.Item name="displayName" label="お名前">
             <Input placeholder="お名前をご入力ください" />
           </Form.Item>
-          <Form.Item name="address" label="製品">
+          <Form.Item name="product" label="製品">
             <Button
               onClick={() => {
                 setVisible(true)
               }}
             >
-              ご使用の機器をお選び
+              ご使用の機器...
             </Button>
             <Cascader
               options={products}
@@ -142,6 +142,7 @@ export default () => {
             name="content"
             label="ご症状内容"
             help="ご症状内容をご入力ください"
+            rules={[{ required: true }]}
           >
             <TextArea
               defaultValue={''}
