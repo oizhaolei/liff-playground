@@ -1,11 +1,13 @@
 import React, { FC, ReactNode } from 'react'
-import './index.css'
+import styles from './index.module.css'
 
 export const DemoDescription: FC<{
   content?: ReactNode
   children?: ReactNode
 }> = (props) => {
   return (
-    <div className="demoDescription">{props.content || props.children}</div>
+    <div className={styles.demoDescription}>
+      {props.content || props.children}
+    </div>
   )
 }

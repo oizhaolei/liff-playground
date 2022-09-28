@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import './index.css'
+import styles from './index.module.css'
 
 interface Props {
   title: string
@@ -10,10 +10,10 @@ interface Props {
 
 export const DemoBlock: FC<Props> = (props) => {
   return (
-    <div className="demoBlock">
-      <div className="title">{props.title}</div>
+    <div className={styles.demoBlock}>
+      <div className={styles.title}>{props.title}</div>
       <div
-        className="main"
+        className={styles.main}
         style={{
           padding: props.padding,
           background: props.background,

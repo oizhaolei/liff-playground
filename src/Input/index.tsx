@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Input } from 'antd-mobile'
 import { DemoBlock } from '../demos'
-import './index.css'
+import styles from './index.module.css'
 
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 
@@ -41,13 +41,13 @@ export default () => {
       </DemoBlock>
 
       <DemoBlock title="查看密码">
-        <div className="password">
+        <div className={styles.password}>
           <Input
-            className="input"
+            className={styles.input}
             placeholder="请输入密码"
             type={visible ? 'text' : 'password'}
           />
-          <div className="eye">
+          <div className={styles.eye}>
             {!visible ? (
               <EyeInvisibleOutline onClick={() => setVisible(true)} />
             ) : (
