@@ -1,8 +1,12 @@
 import * as React from "react";
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 
-import Home from "./Home";
+import Dashboard from "./Dashboard";
 import ImageUploader from "./ImageUploader";
+import TextArea from "./TextArea";
+import Form from "./Form";
+import Input from "./Input";
+
 export default function App() {
   return (
     <div>
@@ -10,9 +14,11 @@ export default function App() {
 
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Dashboard />} />
           <Route path="upload" element={<ImageUploader />} />
-          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="textarea" element={<TextArea />} />
+          <Route path="form" element={<Form />} />
+          <Route path="input" element={<Input />} />
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -32,16 +38,19 @@ function Layout() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">Dashboard</Link>
           </li>
           <li>
             <Link to="/upload">Upload</Link>
           </li>
           <li>
-            <Link to="/dashboard">Dashboard</Link>
+            <Link to="/textarea">TextArea</Link>
           </li>
           <li>
-            <Link to="/nothing-here">Nothing Here</Link>
+            <Link to="/form">Form</Link>
+          </li>
+          <li>
+            <Link to="/input">Input</Link>
           </li>
         </ul>
       </nav>
@@ -56,20 +65,12 @@ function Layout() {
   );
 }
 
-function Dashboard() {
-  return (
-    <div>
-      <h2>Dashboard</h2>
-    </div>
-  );
-}
-
 function NoMatch() {
   return (
     <div>
       <h2>Nothing to see here!</h2>
       <p>
-        <Link to="/">Go to the home page</Link>
+        <Link to="/">Go to the dashboard page</Link>
       </p>
     </div>
   );

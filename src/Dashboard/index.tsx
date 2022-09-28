@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Space, Button } from "antd-mobile";
-import { DemoBlock } from "./demos";
+import { DemoBlock } from "../demos";
 
-import reactLogo from "./assets/react.svg";
-import "./Home.css";
+import reactLogo from "../assets/react.svg";
+import "./index.css";
 
 function App() {
   const [count, setCount] = useState(0);
