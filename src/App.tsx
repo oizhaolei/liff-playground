@@ -33,13 +33,13 @@ export default function App() {
 }
 
 function Layout() {
-  const [visible4, setVisible4] = useState(false)
+  const [visibleMenu, setVisibleMenu] = useState(false)
 
   const right = (
     <div style={{ fontSize: 24 }}>
       <Button
         onClick={() => {
-          setVisible4(true)
+          setVisibleMenu(true)
         }}
         fill="none"
       >
@@ -58,9 +58,9 @@ function Layout() {
         スギノクリニック
       </NavBar>
       <Popup
-        visible={visible4}
+        visible={visibleMenu}
         onMaskClick={() => {
-          setVisible4(false)
+          setVisibleMenu(false)
         }}
         position="right"
         bodyStyle={{ width: '60vw' }}

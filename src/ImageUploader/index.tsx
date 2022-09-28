@@ -17,6 +17,7 @@ import { demoSrc, mockUpload } from './utils'
 import { products } from './data'
 
 const maxCount = 9
+const maxSize = 9
 
 // {
 //     "userId": "U67441163b614ab53b3f884d7cd4b698e",
@@ -31,8 +32,8 @@ const LimitImageUploader: FC = () => {
     },
   ])
   function beforeUpload(file: File) {
-    if (file.size > 5 * 1024 * 1024) {
-      Toast.show('Images size should less than 5M')
+    if (file.size > maxSize * 1024 * 1024) {
+      Toast.show(`Images size should less than ${maxSize}M`)
       return null
     }
     return file
@@ -83,6 +84,12 @@ export default () => {
       console.error(e)
     }
   }, [])
+  Toast.show({
+    icon: 'loading',
+    content: 'Loading…',
+    duration: 1000,
+  })
+
   return (
     <>
       <DemoBlock title="ご障害についてご入力をお願いします">
