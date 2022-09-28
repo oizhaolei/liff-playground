@@ -13,7 +13,8 @@ export default function Button({ appearance, onClick, children }: ButtonProps) {
   return (
     <button
       className={[styles.button, appearance && styles[appearance]].join(' ')}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {children}
     </button>
   )

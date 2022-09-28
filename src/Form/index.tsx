@@ -1,4 +1,4 @@
-import React, { RefObject } from "react";
+import React, { RefObject } from 'react'
 import {
   Form,
   Input,
@@ -10,16 +10,16 @@ import {
   Slider,
   Stepper,
   Switch,
-} from "antd-mobile";
-import dayjs from "dayjs";
-import type { DatePickerRef } from "antd-mobile/es/components/date-picker";
+} from 'antd-mobile'
+import dayjs from 'dayjs'
+import type { DatePickerRef } from 'antd-mobile/es/components/date-picker'
 
 export default () => {
   const onFinish = (values: any) => {
     Dialog.alert({
       content: <pre>{JSON.stringify(values, null, 2)}</pre>,
-    });
-  };
+    })
+  }
 
   return (
     <>
@@ -35,7 +35,7 @@ export default () => {
         <Form.Item
           name="name"
           label="姓名"
-          rules={[{ required: true, message: "姓名不能为空" }]}
+          rules={[{ required: true, message: '姓名不能为空' }]}
         >
           <Input onChange={console.log} placeholder="请输入姓名" />
         </Form.Item>
@@ -80,12 +80,12 @@ export default () => {
           label="生日"
           trigger="onConfirm"
           onClick={(e, datePickerRef: RefObject<DatePickerRef>) => {
-            datePickerRef.current?.open();
+            datePickerRef.current?.open()
           }}
         >
           <DatePicker>
             {(value) =>
-              value ? dayjs(value).format("YYYY-MM-DD") : "请选择日期"
+              value ? dayjs(value).format('YYYY-MM-DD') : '请选择日期'
             }
           </DatePicker>
         </Form.Item>
@@ -94,9 +94,9 @@ export default () => {
             columns={3}
             multiple
             options={[
-              { label: "苹果", value: "apple" },
-              { label: "橘子", value: "orange" },
-              { label: "香蕉", value: "banana" },
+              { label: '苹果', value: 'apple' },
+              { label: '橘子', value: 'orange' },
+              { label: '香蕉', value: 'banana' },
             ]}
           />
         </Form.Item>
@@ -109,7 +109,7 @@ export default () => {
             {
               max: 5,
               min: 1,
-              type: "number",
+              type: 'number',
             },
           ]}
           name="stepper-demo"
@@ -122,5 +122,5 @@ export default () => {
         </Form.Item>
       </Form>
     </>
-  );
-};
+  )
+}

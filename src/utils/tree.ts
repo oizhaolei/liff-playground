@@ -2,7 +2,7 @@
 export function getTreeDeep(treeData: any[], childrenName = 'children') {
   const walker = (tree: any[]) => {
     let deep = 0
-    tree.forEach(item => {
+    tree.forEach((item) => {
       if (item[childrenName]) {
         deep = Math.max(deep, walker(item[childrenName]) + 1)
       } else {

@@ -8,7 +8,7 @@ interface Props {
   children: ReactElement
 }
 
-export const ShouldRender: FC<Props> = props => {
+export const ShouldRender: FC<Props> = (props) => {
   const shouldRender = useShouldRender(
     props.active,
     props.forceRender,

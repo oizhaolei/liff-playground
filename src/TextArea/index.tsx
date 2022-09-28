@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { TextArea } from "antd-mobile";
-import { DemoBlock } from "../demos";
+import React, { useState } from 'react'
+import { TextArea } from 'antd-mobile'
+import { DemoBlock } from '../demos'
 
 export default () => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('')
   return (
     <>
       <DemoBlock title="基本的输入框组件">
@@ -11,7 +11,7 @@ export default () => {
           placeholder="请输入内容"
           value={value}
           onChange={(val) => {
-            setValue(val);
+            setValue(val)
           }}
         />
       </DemoBlock>
@@ -28,12 +28,12 @@ export default () => {
       </DemoBlock>
 
       <DemoBlock title="字数统计">
-        <TextArea defaultValue={"北极星垂地，\n东山月满川。"} showCount />
+        <TextArea defaultValue={'北极星垂地，\n东山月满川。'} showCount />
       </DemoBlock>
 
       <DemoBlock title="字数限制">
         <TextArea
-          defaultValue={"北极星垂地，\n东山月满川。"}
+          defaultValue={'北极星垂地，\n东山月满川。'}
           showCount
           maxLength={30}
         />
@@ -42,7 +42,7 @@ export default () => {
       <DemoBlock title="禁用状态">
         <TextArea
           placeholder="请输入内容"
-          value={"北极星垂地，\n东山月满川。"}
+          value={'北极星垂地，\n东山月满川。'}
           disabled
         />
       </DemoBlock>
@@ -50,10 +50,10 @@ export default () => {
       <DemoBlock title="只读状态">
         <TextArea
           placeholder="请输入内容"
-          value={"北极星垂地，\n东山月满川。"}
+          value={'北极星垂地，\n东山月满川。'}
           readOnly
         />
       </DemoBlock>
     </>
-  );
-};
+  )
+}

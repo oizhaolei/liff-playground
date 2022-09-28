@@ -3,7 +3,7 @@ import React, { ReactElement } from 'react'
 export type PropagationEvent = 'click'
 
 const eventToPropRecord: Record<PropagationEvent, string> = {
-  'click': 'onClick',
+  click: 'onClick',
 }
 
 export function withStopPropagation(

@@ -44,7 +44,7 @@ export function renderImperatively(element: TargetElement) {
     }
     useImperativeHandle(ref, () => ({
       close: onClose,
-      replace: element => {
+      replace: (element) => {
         keyRef.current++
         elementToRender.props.afterClose?.()
         setElementToRender(element)
@@ -64,7 +64,7 @@ export function renderImperatively(element: TargetElement) {
     close: () => {
       wrapperRef.current?.close()
     },
-    replace: element => {
+    replace: (element) => {
       wrapperRef.current?.replace(element)
     },
   } as ImperativeHandler

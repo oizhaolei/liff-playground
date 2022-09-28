@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Input } from "antd-mobile";
-import { DemoBlock } from "../demos";
-import "./index.css";
+import React, { useState } from 'react'
+import { Input } from 'antd-mobile'
+import { DemoBlock } from '../demos'
+import './index.css'
 
-import { EyeInvisibleOutline, EyeOutline } from "antd-mobile-icons";
+import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 
 export default () => {
-  const [value, setValue] = useState("");
-  const [visible, setVisible] = useState(false);
+  const [value, setValue] = useState('')
+  const [visible, setVisible] = useState(false)
   return (
     <>
       <DemoBlock title="基础用法">
@@ -15,7 +15,7 @@ export default () => {
           placeholder="请输入内容"
           value={value}
           onChange={(val) => {
-            setValue(val);
+            setValue(val)
           }}
         />
       </DemoBlock>
@@ -27,7 +27,7 @@ export default () => {
       <DemoBlock title="输入内容右对齐">
         <Input
           placeholder="请输入验证码"
-          style={{ "--text-align": "right" }}
+          style={{ '--text-align': 'right' }}
           clearable
         />
       </DemoBlock>
@@ -45,7 +45,7 @@ export default () => {
           <Input
             className="input"
             placeholder="请输入密码"
-            type={visible ? "text" : "password"}
+            type={visible ? 'text' : 'password'}
           />
           <div className="eye">
             {!visible ? (
@@ -57,5 +57,5 @@ export default () => {
         </div>
       </DemoBlock>
     </>
-  );
-};
+  )
+}

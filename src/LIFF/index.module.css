@@ -22,11 +22,9 @@ body {
   }
 }
 
-
 @media only screen and (max-width: 480px) {
   .liffIdBox {
     width: 250px;
     display: block;
   }
 }
-

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import liff from '@line/liff'
 
-import styles from './index.css'
+import styles from './index.module.css'
 import Header from './components/Header'
 import Snippet from './components/Snippet'
 import Input from './components/Input'

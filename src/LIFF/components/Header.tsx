@@ -15,11 +15,11 @@ export default function Header() {
     )
   }
 
-  return (
-    !liff.isInClient() ? (<div className={styles.headerContainer}>
+  return !liff.isInClient() ? (
+    <div className={styles.headerContainer}>
       <div className={styles.header}>
         <div className={styles.left}>
-          <a href='/'>
+          <a href="/">
             <h1>LIFF Playground</h1>
           </a>
         </div>
@@ -29,7 +29,8 @@ export default function Header() {
               appearance="outlined"
               variant="primary"
               size="S"
-              onClick={openGitHub}>
+              onClick={openGitHub}
+            >
               GitHub
             </Button>
           </div>
@@ -38,6 +39,8 @@ export default function Header() {
           </Button>
         </div>
       </div>
-    </div>) : <></>
+    </div>
+  ) : (
+    <></>
   )
 }

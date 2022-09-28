@@ -1,7 +1,7 @@
 select {
   /* Reset Select */
-  -moz-appearance: none; 
-  -webkit-appearance: none; 
+  -moz-appearance: none;
+  -webkit-appearance: none;
   appearance: none;
   outline: 0;
   border: 0;
@@ -41,7 +41,7 @@ select::-ms-expand {
   right: 0;
   padding: 1em;
   color: white;
-  transition: .25s all ease;
+  transition: 0.25s all ease;
   pointer-events: none;
 }
 

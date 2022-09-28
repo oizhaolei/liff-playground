@@ -1,11 +1,11 @@
-import React, { FC } from "react";
-import "./index.css";
+import React, { FC } from 'react'
+import './index.css'
 
 interface Props {
-  title: string;
-  padding?: string;
-  background?: string;
-  children?: React.ReactNode;
+  title: string
+  padding?: string
+  background?: string
+  children?: React.ReactNode
 }
 
 export const DemoBlock: FC<Props> = (props) => {
@@ -22,10 +22,10 @@ export const DemoBlock: FC<Props> = (props) => {
         {props.children}
       </div>
     </div>
-  );
-};
+  )
+}
 
 DemoBlock.defaultProps = {
-  padding: "12px 12px",
-  background: "var(--adm-color-background)",
-};
+  padding: '12px 12px',
+  background: 'var(--adm-color-background)',
+}

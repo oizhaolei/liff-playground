@@ -9,7 +9,7 @@
   color: #697b8c;
   font-size: 14px;
 }
-html[data-prefers-color-scheme="dark"] .title {
+html[data-prefers-color-scheme='dark'] .title {
   color: #959da6;
 }
 .main {

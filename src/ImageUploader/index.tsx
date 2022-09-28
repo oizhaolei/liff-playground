@@ -1,9 +1,9 @@
-import React, { FC, useState } from "react";
-import { ImageUploader, Space, Toast, Dialog } from "antd-mobile";
-import { DemoBlock, DemoDescription } from "../demos";
-import { ImageUploadItem } from "antd-mobile/es/components/image-uploader";
+import React, { FC, useState } from 'react'
+import { ImageUploader, Space, Toast, Dialog } from 'antd-mobile'
+import { DemoBlock, DemoDescription } from '../demos'
+import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
 
-import { demoSrc, mockUpload, mockUploadFail } from "./utils";
+import { demoSrc, mockUpload, mockUploadFail } from './utils'
 
 // 基础用法
 const Basic: FC = () => {
@@ -11,7 +11,7 @@ const Basic: FC = () => {
     {
       url: demoSrc,
     },
-  ]);
+  ])
 
   return (
     <ImageUploader
@@ -19,8 +19,8 @@ const Basic: FC = () => {
       onChange={setFileList}
       upload={mockUpload}
     />
-  );
-};
+  )
+}
 
 // 上传状态
 const UploadStatus: FC = () => {
@@ -28,7 +28,7 @@ const UploadStatus: FC = () => {
     {
       url: demoSrc,
     },
-  ]);
+  ])
 
   return (
     <ImageUploader
@@ -36,8 +36,8 @@ const UploadStatus: FC = () => {
       onChange={setFileList}
       upload={mockUploadFail as any}
     />
-  );
-};
+  )
+}
 
 // 限制上传大小
 const LimitSize: FC = () => {
@@ -45,14 +45,14 @@ const LimitSize: FC = () => {
     {
       url: demoSrc,
     },
-  ]);
+  ])
 
   function beforeUpload(file: File) {
     if (file.size > 1024 * 1024) {
-      Toast.show("请选择小于 1M 的图片");
-      return null;
+      Toast.show('请选择小于 1M 的图片')
+      return null
     }
-    return file;
+    return file
   }
 
   return (
@@ -62,17 +62,17 @@ const LimitSize: FC = () => {
       upload={mockUpload}
       beforeUpload={beforeUpload}
     />
-  );
-};
+  )
+}
 
 // 限制图片数量
 const LimitCount: FC = () => {
-  const maxCount = 3;
+  const maxCount = 3
   const [fileList, setFileList] = useState<ImageUploadItem[]>([
     {
       url: demoSrc,
     },
-  ]);
+  ])
 
   return (
     <ImageUploader
@@ -83,11 +83,11 @@ const LimitCount: FC = () => {
       maxCount={3}
       showUpload={fileList.length < maxCount}
       onCountExceed={(exceed) => {
-        Toast.show(`最多选择 ${maxCount} 张图片，你多选了 ${exceed} 张`);
+        Toast.show(`最多选择 ${maxCount} 张图片，你多选了 ${exceed} 张`)
       }}
     />
-  );
-};
+  )
+}
 
 // 删除图片确认
 const DeleteImage: FC = () => {
@@ -95,7 +95,7 @@ const DeleteImage: FC = () => {
     {
       url: demoSrc,
     },
-  ]);
+  ])
 
   return (
     <ImageUploader
@@ -104,12 +104,12 @@ const DeleteImage: FC = () => {
       upload={mockUpload}
       onDelete={() => {
         return Dialog.confirm({
-          content: "是否确认删除",
-        });
+          content: '是否确认删除',
+        })
       }}
     />
-  );
-};
+  )
+}
 
 export default () => {
   return (
@@ -146,5 +146,5 @@ export default () => {
         </Space>
       </DemoBlock>
     </>
-  );
-};
+  )
+}

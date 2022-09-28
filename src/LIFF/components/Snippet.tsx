@@ -26,9 +26,9 @@ interface RunnerError extends Error {
   message: string
 }
 
-const primaryRed = '#eb4e3d';
-const primaryBlue = '#6fedd6';
-const primaryOrange = '#ff9551';
+const primaryRed = '#eb4e3d'
+const primaryBlue = '#6fedd6'
+const primaryOrange = '#ff9551'
 
 export default function Snippet({
   apiName,
@@ -43,7 +43,7 @@ export default function Snippet({
   loginRequired,
   inClientOnly,
   isInLIFF = true,
-  isInMINI = true
+  isInMINI = true,
 }: SippetProps) {
   const [response, setResponse] = useState('')
   const [payload, setPayload] = useState(defaultRequestPayload || '')
@@ -71,66 +71,73 @@ export default function Snippet({
 
   return (
     <FilterContext.Consumer>
-      {
-        (filter) => 
-          (filter === FilterTypes.ALL 
-          || (filter === FilterTypes.LIFF && isInLIFF) 
-          || (filter === FilterTypes.MINI && isInMINI))
-          && <div className={styles.snippet}>
-          <div className={styles.head}>
-            <h2 className={styles.title}>
-              <span className={styles.text}>{apiName}</span>
-              <Tag>≥{version}</Tag>
-              {loginRequired && <Tag backgroundColor={primaryRed}>Login Required</Tag>} {inClientOnly && <Tag backgroundColor={primaryRed}>LINE Client only</Tag>}
-              {isInLIFF && <Tag backgroundColor={primaryBlue}>LIFF</Tag>}
-              {isInMINI && <Tag backgroundColor={primaryOrange}>MINI</Tag>}
-            </h2>
-            <div className={styles.action}>
-              <Button
-                appearance="outlined"
-                variant="primary"
-                size="S"
-                aria-disabled="false"
-                onClick={openDoc}>
-                DOCUMENT
-              </Button>{' '}
-              <Button
-                variant="primary"
-                size="S"
-                onClick={() => {
-                  callRunner()
-                }}>
-                RUN
-              </Button>
+      {(filter) =>
+        (filter === FilterTypes.ALL ||
+          (filter === FilterTypes.LIFF && isInLIFF) ||
+          (filter === FilterTypes.MINI && isInMINI)) && (
+          <div className={styles.snippet}>
+            <div className={styles.head}>
+              <h2 className={styles.title}>
+                <span className={styles.text}>{apiName}</span>
+                <Tag>≥{version}</Tag>
+                {loginRequired && (
+                  <Tag backgroundColor={primaryRed}>Login Required</Tag>
+                )}{' '}
+                {inClientOnly && (
+                  <Tag backgroundColor={primaryRed}>LINE Client only</Tag>
+                )}
+                {isInLIFF && <Tag backgroundColor={primaryBlue}>LIFF</Tag>}
+                {isInMINI && <Tag backgroundColor={primaryOrange}>MINI</Tag>}
+              </h2>
+              <div className={styles.action}>
+                <Button
+                  appearance="outlined"
+                  variant="primary"
+                  size="S"
+                  aria-disabled="false"
+                  onClick={openDoc}
+                >
+                  DOCUMENT
+                </Button>{' '}
+                <Button
+                  variant="primary"
+                  size="S"
+                  onClick={() => {
+                    callRunner()
+                  }}
+                >
+                  RUN
+                </Button>
+              </div>
             </div>
-          </div>
-          {needRequestPayload && (
-            <TextArea
-              label="Arguments"
-              helpText="Enter the request payload for API request"
-              value={payload}
-              onChange={(e) => setPayload(e?.currentTarget?.value)}
-              rows={4}
-            />
-          )}
-          {!hideResponse &&
-            (useTextareaForResponse ? (
+            {needRequestPayload && (
               <TextArea
-                label="Response"
-                helpText="Run this API to get the response"
-                value={response}
+                label="Arguments"
+                helpText="Enter the request payload for API request"
+                value={payload}
+                onChange={(e) => setPayload(e?.currentTarget?.value)}
                 rows={4}
-                readonly={true}
               />
-            ) : (
-              <Input
-                label="Response"
-                helpText="Run this API to get the response"
-                readonly={true}
-                value={response}
-              />
-            ))}
-        </div>
+            )}
+            {!hideResponse &&
+              (useTextareaForResponse ? (
+                <TextArea
+                  label="Response"
+                  helpText="Run this API to get the response"
+                  value={response}
+                  rows={4}
+                  readonly={true}
+                />
+              ) : (
+                <Input
+                  label="Response"
+                  helpText="Run this API to get the response"
+                  readonly={true}
+                  value={response}
+                />
+              ))}
+          </div>
+        )
       }
     </FilterContext.Consumer>
   )
