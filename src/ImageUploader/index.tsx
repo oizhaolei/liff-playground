@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react'
-import { ImageUploader, Space, Toast, Dialog } from 'antd-mobile'
+import { ImageUploader, Space, Toast, Dialog, Avatar } from 'antd-mobile'
 import { Button, TextArea, Form, Input } from 'antd-mobile'
 import liff from '@line/liff'
 
@@ -50,8 +50,15 @@ const LimitImageUploader: FC = () => {
     />
   )
 }
+interface Profile {
+  userIdi?: string
+  displayName?: string
+  pictureUrl?: string
+}
 
 export default () => {
+  const [profile, setProfile] = useState<Profile>({})
+
   const onFinish = (values: any) => {
     Dialog.alert({
       content: <pre>{JSON.stringify(values, null, 2)}</pre>,
@@ -59,11 +66,22 @@ export default () => {
   }
 
   useEffect(() => {
-    liff.getProfile().then(console.log)
+    try {
+      liff.getProfile().then(setProfile)
+    } catch (e) {
+      console.error(e)
+    }
   }, [])
   return (
     <>
       <DemoBlock title="ご障害についてご入力をお願いします">
+        <Avatar
+          src={
+            profile.pictureUrl ||
+            'https://obs.line-scdn.net/0hUijqFRYACkZXCB8T-8J1EQBVASRkahRNdTweITlaCAIxaihrLD1HQ3NgV3cmagYQKzwwQC5dIXYxQxJ0YxIgdS9jMhU5RDtRLBIjITR0Jh07WSts/f256x256'
+          }
+        />
+
         <Form
           name="form"
           onFinish={onFinish}
@@ -74,7 +92,10 @@ export default () => {
           }
         >
           <Form.Item name="name" label="お名前" rules={[{ required: true }]}>
-            <Input placeholder="お名前をご入力ください" />
+            <Input
+              placeholder="お名前をご入力ください"
+              value={profile.displayName || ''}
+            />
           </Form.Item>
           <Form.Item name="address" label="ご住所">
             <Input placeholder="ご住所をご入力ください" />
