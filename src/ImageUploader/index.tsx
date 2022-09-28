@@ -1,12 +1,20 @@
 import React, { FC, useState, useEffect } from 'react'
-import { ImageUploader, Space, Toast, Dialog, Avatar } from 'antd-mobile'
-import { Button, TextArea, Form, Input } from 'antd-mobile'
+import {
+  ImageUploader,
+  Space,
+  Toast,
+  Dialog,
+  Avatar,
+  AutoCenter,
+} from 'antd-mobile'
+import { Button, Cascader, TextArea, Form, Input } from 'antd-mobile'
 import liff from '@line/liff'
 
 import { DemoBlock, DemoDescription } from '../demos'
 import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
 
 import { demoSrc, mockUpload } from './utils'
+import { products } from './data'
 
 const maxCount = 9
 
@@ -58,6 +66,8 @@ interface Profile {
 
 export default () => {
   const [profile, setProfile] = useState<Profile>({})
+  const [visible, setVisible] = useState(false)
+  const [value, setValue] = useState<string[]>([])
 
   const onFinish = (values: any) => {
     Dialog.alert({
@@ -75,15 +85,20 @@ export default () => {
   return (
     <>
       <DemoBlock title="ご障害についてご入力をお願いします">
-        <Avatar
-          src={
-            profile.pictureUrl ||
-            'https://obs.line-scdn.net/0hUijqFRYACkZXCB8T-8J1EQBVASRkahRNdTweITlaCAIxaihrLD1HQ3NgV3cmagYQKzwwQC5dIXYxQxJ0YxIgdS9jMhU5RDtRLBIjITR0Jh07WSts/f256x256'
-          }
-        />
+        <AutoCenter>
+          <Avatar
+            src={
+              profile.pictureUrl ||
+              'https://obs.line-scdn.net/0hUijqFRYACkZXCB8T-8J1EQBVASRkahRNdTweITlaCAIxaihrLD1HQ3NgV3cmagYQKzwwQC5dIXYxQxJ0YxIgdS9jMhU5RDtRLBIjITR0Jh07WSts/f256x256'
+            }
+          />
+        </AutoCenter>
 
         <Form
           name="form"
+          initialValues={{
+            displayName: profile.displayName,
+          }}
           onFinish={onFinish}
           footer={
             <Button block type="submit" color="primary" size="large">
@@ -92,13 +107,36 @@ export default () => {
           }
         >
           <Form.Item name="name" label="お名前" rules={[{ required: true }]}>
-            <Input
-              placeholder="お名前をご入力ください"
-              value={profile.displayName || ''}
-            />
+            <Input placeholder="お名前をご入力ください" />
           </Form.Item>
-          <Form.Item name="address" label="ご住所">
-            <Input placeholder="ご住所をご入力ください" />
+          <Form.Item name="address" label="製品">
+            <Button
+              onClick={() => {
+                setVisible(true)
+              }}
+            >
+              ご使用の機器をお選び
+            </Button>
+            <Cascader
+              options={products}
+              visible={visible}
+              cancelText="キャンセル"
+              confirmText="OK"
+              placeholder="選択"
+              onClose={() => {
+                setVisible(false)
+              }}
+              value={value}
+              onConfirm={setValue}
+            >
+              {(items) => {
+                if (items.every((item) => item === null)) {
+                  return '未選択'
+                } else {
+                  return items.map((item) => item?.label ?? '未選択').join('-')
+                }
+              }}
+            </Cascader>
           </Form.Item>
           <Form.Item
             name="content"
