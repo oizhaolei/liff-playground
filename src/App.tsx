@@ -1,16 +1,17 @@
-import * as React from "react";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import * as React from 'react'
+import { Routes, Route, Outlet, Link } from 'react-router-dom'
 
-import Dashboard from "./Dashboard";
-import ImageUploader from "./ImageUploader";
-import TextArea from "./TextArea";
-import Form from "./Form";
-import Input from "./Input";
+import Dashboard from './Dashboard'
+import ImageUploader from './ImageUploader'
+import TextArea from './TextArea'
+import Form from './Form'
+import Input from './Input'
+import Liff from './Liff'
 
 export default function App() {
   return (
     <div>
-      <h1>Basic Example</h1>
+      <h1>Line Mini App</h1>
 
       <Routes>
         <Route path="/" element={<Layout />}>
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="textarea" element={<TextArea />} />
           <Route path="form" element={<Form />} />
           <Route path="input" element={<Input />} />
+          <Route path="liff" element={<Liff />} />
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
@@ -27,7 +29,7 @@ export default function App() {
         </Route>
       </Routes>
     </div>
-  );
+  )
 }
 
 function Layout() {
@@ -52,6 +54,9 @@ function Layout() {
           <li>
             <Link to="/input">Input</Link>
           </li>
+          <li>
+            <Link to="/liff">Liff</Link>
+          </li>
         </ul>
       </nav>
 
@@ -62,7 +67,7 @@ function Layout() {
           the child routes we defined above. */}
       <Outlet />
     </div>
-  );
+  )
 }
 
 function NoMatch() {
@@ -73,5 +78,5 @@ function NoMatch() {
         <Link to="/">Go to the dashboard page</Link>
       </p>
     </div>
-  );
+  )
 }
