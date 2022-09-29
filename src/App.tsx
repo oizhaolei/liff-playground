@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Routes, Route, Outlet, Link } from 'react-router-dom'
 import { NavBar, Popup, Space, Button } from 'antd-mobile'
-import { SearchOutline, MoreOutline, CloseOutline } from 'antd-mobile-icons'
+import { MoreOutline } from 'antd-mobile-icons'
 
 import Dashboard from './Dashboard'
 import ImageUploader from './ImageUploader'
@@ -54,9 +54,7 @@ function Layout() {
     <div>
       {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
-      <NavBar backArrow={false} right={right}>
-        スギノクリニック
-      </NavBar>
+      <NavBar backArrow={false} right={right}></NavBar>
       <Popup
         visible={visibleMenu}
         onMaskClick={() => {

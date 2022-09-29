@@ -5,7 +5,7 @@ import styles from './index.module.css'
 
 import { EyeInvisibleOutline, EyeOutline } from 'antd-mobile-icons'
 
-export default () => {
+export default function InputPage() {
   const [value, setValue] = useState('')
   const [visible, setVisible] = useState(false)
   return (

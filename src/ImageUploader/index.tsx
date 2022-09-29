@@ -65,7 +65,7 @@ interface Profile {
   pictureUrl?: string
 }
 
-export default () => {
+export default function UploaderPage() {
   const [profile, setProfile] = useState<Profile>({})
   const [visibleCascader, setVisibleCascader] = useState(false)
   const [productCascader, setProductCascader] = useState<string[]>([])

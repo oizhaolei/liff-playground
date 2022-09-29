@@ -12,7 +12,7 @@ type PropRecord = Record<string, PropItem>
 export function createPropsTable(propRecord: PropRecord) {
   return function PropsTable() {
     return (
-      <div className='markdown'>
+      <div className="markdown">
         <table>
           <thead>
             <tr>
@@ -23,7 +23,7 @@ export function createPropsTable(propRecord: PropRecord) {
             </tr>
           </thead>
           <tbody>
-            {Object.keys(propRecord).map(prop => {
+            {Object.keys(propRecord).map((prop) => {
               const item = propRecord[prop]
               return (
                 <tr key={prop}>

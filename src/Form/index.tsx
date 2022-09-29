@@ -14,7 +14,7 @@ import {
 import dayjs from 'dayjs'
 import type { DatePickerRef } from 'antd-mobile/es/components/date-picker'
 
-export default () => {
+export default function FormPage() {
   const onFinish = (values: any) => {
     Dialog.alert({
       content: <pre>{JSON.stringify(values, null, 2)}</pre>,

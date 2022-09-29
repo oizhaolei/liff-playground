@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { TextArea } from 'antd-mobile'
 import { DemoBlock } from '../demos'
 
-export default () => {
+export default function TextAreaPage() {
   const [value, setValue] = useState('')
   return (
     <>
