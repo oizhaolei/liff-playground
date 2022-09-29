@@ -1,19 +1,13 @@
 import React, { FC, useState, useEffect } from 'react'
-import {
-  ImageUploader,
-  Space,
-  Toast,
-  Dialog,
-  Avatar,
-  AutoCenter,
-} from 'antd-mobile'
+import { ImageUploader, Space, Toast, Dialog, AutoCenter } from 'antd-mobile'
+import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
 import { Button, Cascader, TextArea, Form, Input } from 'antd-mobile'
 import liff from '@line/liff'
 
 import { DemoBlock, DemoDescription } from '../demos'
-import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
+import styles from './index.module.css'
 
-import { demoSrc, mockUpload } from './utils'
+import { mockUpload } from './utils'
 import { products } from './data'
 
 const maxCount = 9
@@ -26,11 +20,7 @@ const maxSize = 9
 // }
 // limit
 const LimitImageUploader: FC = () => {
-  const [imageList, setImageList] = useState<ImageUploadItem[]>([
-    {
-      url: demoSrc,
-    },
-  ])
+  const [imageList, setImageList] = useState<ImageUploadItem[]>([])
   function beforeUpload(file: File) {
     if (file.size > maxSize * 1024 * 1024) {
       Toast.show(`Images size should less than ${maxSize}M`)
@@ -94,11 +84,12 @@ export default function UploaderPage() {
     <>
       <DemoBlock title="ご障害についてご入力をお願いします">
         <AutoCenter>
-          <Avatar
+          <img
             src={
               profile.pictureUrl ||
               'https://obs.line-scdn.net/0hUijqFRYACkZXCB8T-8J1EQBVASRkahRNdTweITlaCAIxaihrLD1HQ3NgV3cmagYQKzwwQC5dIXYxQxJ0YxIgdS9jMhU5RDtRLBIjITR0Jh07WSts/f256x256'
             }
+            className={styles.logo}
           />
         </AutoCenter>
 
@@ -121,34 +112,35 @@ export default function UploaderPage() {
             </Form.Item>
             <Form.Item name="product" label="製品">
               <Button
+                color="primary"
+                fill="none"
                 onClick={() => {
                   setVisibleCascader(true)
                 }}
               >
-                ご使用の機器...
+                <Cascader
+                  options={products}
+                  visible={visibleCascader}
+                  cancelText="キャンセル"
+                  confirmText="OK"
+                  placeholder="選択"
+                  onClose={() => {
+                    setVisibleCascader(false)
+                  }}
+                  value={productCascader}
+                  onConfirm={setProductCascader}
+                >
+                  {(items) => {
+                    if (items.every((item) => item === null)) {
+                      return 'ご使用の機器...'
+                    } else {
+                      return items
+                        .map((item) => item?.label ?? '機器未選択')
+                        .join('-')
+                    }
+                  }}
+                </Cascader>
               </Button>
-              <Cascader
-                options={products}
-                visible={visibleCascader}
-                cancelText="キャンセル"
-                confirmText="OK"
-                placeholder="選択"
-                onClose={() => {
-                  setVisibleCascader(false)
-                }}
-                value={productCascader}
-                onConfirm={setProductCascader}
-              >
-                {(items) => {
-                  if (items.every((item) => item === null)) {
-                    return '未選択'
-                  } else {
-                    return items
-                      .map((item) => item?.label ?? '未選択')
-                      .join('-')
-                  }
-                }}
-              </Cascader>
             </Form.Item>
             <Form.Item
               name="content"
