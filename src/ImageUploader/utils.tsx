@@ -1,16 +1,24 @@
-import { sleep } from '../demos/utils/sleep'
+import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
+import axios, { AxiosResponse } from 'axios'
+import { UploadFromData } from '.'
 
-export const demoSrc =
-  'https://images.unsplash.com/photo-1567945716310-4745a6b7844b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=60'
-
-export async function mockUpload(file: File) {
-  await sleep(3000)
+export async function doUpload(file: File): Promise<ImageUploadItem> {
+  const formData = new FormData()
+  formData.append('file', file)
+  const res: AxiosResponse<ImageUploadItem> = await axios.post(
+    `https://line.spa-flow.com/api/upload`,
+    formData
+  )
+  console.log('doUpload', res.data)
   return {
-    url: URL.createObjectURL(file),
+    url: `https://line.spa-flow.com/files/${res.data.key}`,
   }
 }
-
-export async function mockUploadFail() {
-  await sleep(3000)
-  throw new Error('Fail to upload')
+export async function doSubmit(values: UploadFromData) {
+  console.log('doSubmit:', values)
+  const res: AxiosResponse<UploadFromData> = await axios.post(
+    `https://line.spa-flow.com/api/malfunction`,
+    values
+  )
+  console.log(res.data)
 }
