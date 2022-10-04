@@ -81,6 +81,12 @@ export default function UploaderPage() {
       icon: 'success',
       content: 'データをアップロードしました。',
       afterClose: async () => {
+        await liff.sendMessages([
+          {
+            type: 'text',
+            text: '故障情報を入力して頂いて、誠にありがとうございました。',
+          },
+        ])
         await liff.closeWindow()
       },
     })
