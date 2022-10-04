@@ -72,11 +72,12 @@ export default function UploaderPage() {
       content: 'Loading…',
       duration: 1000,
     })
-    await doSubmit({
+    const data = {
       ...values,
       product: productCascader.join(','),
       images: imageList.map((v) => v.url),
-    })
+    }
+    await doSubmit(data)
     Toast.show({
       icon: 'success',
       content: 'データをアップロードしました。',
@@ -84,7 +85,16 @@ export default function UploaderPage() {
         await liff.sendMessages([
           {
             type: 'text',
-            text: '故障情報を入力して頂いて、誠にありがとうございました。',
+            text: '故障情報を入力しました。',
+            // 名前：${data.displayName}
+            // 機器：${data.product}
+            // 詳細：${data.content}
+            // ,
+            //           },
+            //           {
+            //             type: 'image',
+            //             originalContentUrl: imageList[0].url,
+            //             previewImageUrl: imageList[0].thumbnailUrl || '',
           },
         ])
         await liff.closeWindow()
