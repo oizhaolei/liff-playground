@@ -66,11 +66,23 @@ export default function UploaderPage() {
   const [imageList, setImageList] = useState<ImageUploadItem[]>([])
   const [form] = Form.useForm()
 
-  const onFinish = (values: any) => {
-    doSubmit({
+  const onFinish = async (values: any) => {
+    Toast.show({
+      icon: 'loading',
+      content: 'Loading…',
+      duration: 1000,
+    })
+    await doSubmit({
       ...values,
       product: productCascader.join(','),
       images: imageList.map((v) => v.url),
+    })
+    Toast.show({
+      icon: 'success',
+      content: 'データをアップロードしました。',
+      afterClose: async () => {
+        await liff.closeWindow()
+      },
     })
   }
 
@@ -81,11 +93,6 @@ export default function UploaderPage() {
       console.error(e)
     }
   }, [])
-  Toast.show({
-    icon: 'loading',
-    content: 'Loading…',
-    duration: 1000,
-  })
 
   return (
     <>
