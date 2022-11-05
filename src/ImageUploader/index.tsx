@@ -1,14 +1,13 @@
-import React, { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { FC, useState, useEffect, Dispatch, SetStateAction } from 'react'
 import { ImageUploader, Space, Toast, AutoCenter } from 'antd-mobile'
 import { ImageUploadItem } from 'antd-mobile/es/components/image-uploader'
-import { Button, Cascader, TextArea, Form, Input } from 'antd-mobile'
+import { Button, TextArea, Form, Input } from 'antd-mobile'
 import liff from '@line/liff'
 
 import { DemoBlock, DemoDescription } from '../demos'
 import styles from './index.module.css'
 
 import { doUpload, doSubmit } from './utils'
-import { products } from './data'
 
 const maxCount = 9
 const maxSize = 9
@@ -61,8 +60,6 @@ interface Profile {
 
 export default function UploaderPage() {
   const [profile, setProfile] = useState<Profile>({})
-  const [visibleCascader, setVisibleCascader] = useState(false)
-  const [productCascader, setProductCascader] = useState<string[]>([])
   const [imageList, setImageList] = useState<ImageUploadItem[]>([])
   const [form] = Form.useForm()
 
@@ -74,7 +71,6 @@ export default function UploaderPage() {
     })
     const data = {
       ...values,
-      product: productCascader.join(','),
       images: imageList.map((v) => v.url),
     }
     await doSubmit(data)
@@ -90,14 +86,14 @@ export default function UploaderPage() {
             // 機器：${data.product}
             // 詳細：${data.content}
             // ,
-            //           },
-            //           {
-            //             type: 'image',
-            //             originalContentUrl: imageList[0].url,
-            //             previewImageUrl: imageList[0].thumbnailUrl || '',
+            // },
+            // {
+            //   type: 'image',
+            //   originalContentUrl: imageList[0].url,
+            //   previewImageUrl: imageList[0].thumbnailUrl || '',
           },
         ])
-        await liff.closeWindow()
+        liff.closeWindow()
       },
     })
   }
@@ -140,36 +136,7 @@ export default function UploaderPage() {
             <Input placeholder="お名前をご入力ください" />
           </Form.Item>
           <Form.Item name="product" label="製品">
-            <Button
-              color="primary"
-              fill="none"
-              onClick={() => {
-                setVisibleCascader(true)
-              }}
-            >
-              <Cascader
-                options={products}
-                visible={visibleCascader}
-                cancelText="キャンセル"
-                confirmText="OK"
-                placeholder="選択"
-                onClose={() => {
-                  setVisibleCascader(false)
-                }}
-                value={productCascader}
-                onConfirm={setProductCascader}
-              >
-                {(items) => {
-                  if (items.every((item) => item === null)) {
-                    return 'ご使用の機器...'
-                  } else {
-                    return items
-                      .map((item) => item?.label ?? '機器未選択')
-                      .join('-')
-                  }
-                }}
-              </Cascader>
-            </Button>
+            <Input placeholder="製品名をご入力ください" />
           </Form.Item>
           <Form.Item
             name="content"
